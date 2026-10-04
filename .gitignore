@@ -1,0 +1,34 @@
+*.log
+.DS_Store
+.env
+.env.backup
+.env.production
+.phpactor.json
+.phpunit.result.cache
+/.fleet
+/.idea
+/.nova
+/.phpunit.cache
+/.vscode
+/.zed
+/auth.json
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/storage/pail
+/vendor
+Homestead.json
+Homestead.yaml
+Thumbs.db
+
+# Bukti pembayaran hasil unggahan pengguna. Foldernya tetap ikut (ada
+# .gitignore di dalamnya) supaya aplikasi bisa langsung jalan setelah clone,
+# tapi isi berkas yang diunggah tidak ikut ter-commit.
+/public/uploads/*
+!/public/uploads/bukti/
+!/public/uploads/bukti/.gitignore
+
+# Folder kerja sementara skrip uji E2E.
+/storage/uji_*
