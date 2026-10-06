@@ -27,7 +27,7 @@
                             <td>{{ $r->jadwal?->lapangan?->nama ?? '-' }}</td>
                             <td>{{ $r->jadwal?->tanggal?->format('d-m-Y') ?? '-' }}</td>
                             <td>Rp {{ number_format($r->total_harga, 0, ',', '.') }}</td>
-                            <td><span class="badge">{{ $r->status_label }}</span></td>
+                            <td>@include('partials.badge', ['status' => $r->status, 'label' => $r->status_label])</td>
                         </tr>
                     @endforeach
                 </tbody>

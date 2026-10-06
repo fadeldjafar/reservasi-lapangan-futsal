@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # E2E Tahap 7: alur penuh aplikasi + otorisasi + anti double-booking + cleanup.
 set -u
-cd /c/Users/ASUS/FreebuffFadel/ai-agent-app
-export PATH="/c/xampp/php:/c/xampp/mysql/bin:$HOME/bin:$PATH"
+cd /d/laragon/www/FreebuffFadel/ai-agent-app
+export PATH="/d/laragon/bin/php/php-8.3.33-Win32-vs16-x64:$HOME/bin:$PATH"
 
 BASE=http://127.0.0.1:8000
 J=/tmp/cj_t7.txt

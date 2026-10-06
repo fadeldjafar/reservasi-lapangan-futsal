@@ -96,19 +96,52 @@ class ReservasiTest extends TestCase
         $this->assertDatabaseMissing('reservasi', ['jadwal_id' => $jadwalB->id]);
     }
 
-    public function test_admin_dan_pemilik_juga_bisa_booking_lewat_alamat_yang_sama(): void
+    public function test_admin_tidak_bisa_membuat_reservasi(): void
     {
-        // Route memang berada di middleware auth (bukan khusus pelanggan),
-        // jadi admin pun boleh memesan.
         $lapangan = $this->lapangan();
         $jadwal = $this->jadwal($lapangan);
         $admin = $this->pengguna('admin');
 
         $this->actingAs($admin)->post(
             '/lapangan/'.$lapangan->id.'/jadwal/'.$jadwal->id.'/reservasi'
-        )->assertRedirect('/reservasi');
+        )->assertForbidden();
 
-        $this->assertDatabaseHas('reservasi', ['jadwal_id' => $jadwal->id, 'user_id' => $admin->id]);
+        $this->assertDatabaseMissing('reservasi', ['jadwal_id' => $jadwal->id]);
+    }
+
+    public function test_pemilik_tidak_bisa_membuat_reservasi(): void
+    {
+        $lapangan = $this->lapangan();
+        $jadwal = $this->jadwal($lapangan);
+        $pemilik = $this->pengguna('pemilik');
+
+        $this->actingAs($pemilik)->post(
+            '/lapangan/'.$lapangan->id.'/jadwal/'.$jadwal->id.'/reservasi'
+        )->assertForbidden();
+
+        $this->assertDatabaseMissing('reservasi', ['jadwal_id' => $jadwal->id]);
+    }
+
+    /**
+     * Endpoint reservasi pelanggan (/reservasi, /reservasi/{id}, upload bukti)
+     * tidak boleh bisa dibuka langsung oleh admin/petugas maupun pemilik.
+     */
+    public function test_admin_dan_pemilik_ditolak_membuka_endpoint_reservasi_pelanggan(): void
+    {
+        $reservasi = Reservasi::factory()->untukJadwal($this->jadwal())->create();
+
+        foreach (['admin', 'pemilik'] as $role) {
+            $user = $this->pengguna($role);
+
+            $this->actingAs($user)->get('/reservasi')->assertForbidden();
+            $this->actingAs($user)->get('/reservasi/'.$reservasi->id)->assertForbidden();
+            $this->actingAs($user)
+                ->post('/reservasi/'.$reservasi->id.'/pembayaran', ['bukti' => $this->fileGambarPng()])
+                ->assertForbidden();
+        }
+
+        // Tidak ada berkas bukti yang tertulis untuk request yang ditolak.
+        $this->assertNull($reservasi->fresh()->pembayaran->bukti_transfer);
     }
 
     public function test_daftar_reservasi_hanya_menampilkan_miliknya_sendiri(): void

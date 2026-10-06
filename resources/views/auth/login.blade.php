@@ -3,8 +3,10 @@
 @section('title', 'Masuk')
 
 @section('content')
-    <div class="card" style="max-width:480px;margin:0 auto;">
-        <h1>Masuk</h1>
+    <div class="card auth-card">
+        <div class="auth-ico">🔑</div>
+        <h1>Masuk ke Akun Anda</h1>
+        <p class="muted">Gunakan email terdaftar untuk mengakses sistem reservasi.</p>
 
         @if ($errors->any())
             <div class="errors">
@@ -19,16 +21,19 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" value="{{ old('email') }}" required>
+            <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="nama@email.com" required>
 
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password" placeholder="••••••••" required>
 
-            <p style="margin-top:18px;">
-                <button class="btn" type="submit">Masuk</button>
+            <p style="margin-top:22px;">
+                <button class="btn" type="submit" style="width:100%;margin:0;">Masuk</button>
             </p>
         </form>
 
-        <p class="muted" style="margin-top:12px;">Belum punya akun? <a href="{{ route('register') }}">Daftar</a></p>
+        <hr class="divider">
+
+        <p class="muted">Belum punya akun? <a href="{{ route('register') }}">Daftar gratis</a></p>
+        <p class="muted" style="margin-top:6px;">Ingin melihat jadwal dulu? <a href="{{ route('lapangan.index') }}">Lihat lapangan</a></p>
     </div>
 @endsection

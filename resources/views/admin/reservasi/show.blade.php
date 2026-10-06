@@ -5,7 +5,7 @@
 @section('content')
     <div class="card">
         <h1>Reservasi #{{ $reservasi->id }}</h1>
-        <p>Status: <span class="badge">{{ $reservasi->status_label }}</span></p>
+        <p>Status: @include('partials.badge', ['status' => $reservasi->status, 'label' => $reservasi->status_label])</p>
         <p class="muted" style="margin-top:6px;">Dibuat {{ $reservasi->created_at->format('d-m-Y H:i') }}</p>
         <p style="margin-top:12px;">
             <a class="btn btn-secondary" href="{{ route('admin.reservasi.index') }}">← Kembali ke Data Reservasi</a>
@@ -41,7 +41,7 @@
             <h1>Pembayaran</h1>
             <table>
                 <tr><th>Jumlah</th><td>Rp {{ number_format($reservasi->pembayaran->jumlah, 0, ',', '.') }}</td></tr>
-                <tr><th>Status</th><td><span class="badge">{{ $reservasi->pembayaran->status }}</span></td></tr>
+                <tr><th>Status</th><td>@include('partials.badge', ['status' => $reservasi->pembayaran->status])</td></tr>
                 <tr><th>Nama Pengirim</th><td>{{ $reservasi->pembayaran->nama_pengirim ?? '-' }}</td></tr>
                 <tr>
                     <th>Diverifikasi</th>

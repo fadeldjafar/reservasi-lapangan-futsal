@@ -23,7 +23,7 @@
                         <tr>
                             <td>{{ $lapangan->nama }}</td>
                             <td>Rp {{ number_format($lapangan->harga_per_jam, 0, ',', '.') }}</td>
-                            <td><span class="badge">{{ $lapangan->status }}</span></td>
+                            <td>@include('partials.badge', ['status' => $lapangan->status])</td>
                             <td>{{ $lapangan->jadwal_count }}</td>
                             <td>
                                 <a class="btn" style="padding:6px 12px;" href="{{ route('admin.lapangan.edit', $lapangan) }}">Ubah</a>

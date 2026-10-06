@@ -31,7 +31,12 @@ Route::middleware('auth')->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    // Reservasi (khusus pelanggan yang login)
+});
+
+// Reservasi & pembayaran: KHRUSUS role pelanggan.
+// Admin/petugas dan pemilik hanya boleh melihat reservasi lewat route
+// /admin/reservasi dan /pemilik/reservasi — bukan membuat/membayar sendiri.
+Route::middleware(['auth', 'role:pelanggan'])->group(function () {
     Route::get('/reservasi', [ReservasiController::class, 'index'])->name('reservasi.index');
     Route::get('/reservasi/{reservasi}', [ReservasiController::class, 'show'])->name('reservasi.show');
     Route::post('/lapangan/{lapangan}/jadwal/{jadwal}/reservasi', [ReservasiController::class, 'store'])->name('reservasi.store');

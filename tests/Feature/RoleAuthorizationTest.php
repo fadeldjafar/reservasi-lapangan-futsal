@@ -17,6 +17,7 @@ class RoleAuthorizationTest extends TestCase
         return [
             'dashboard admin' => ['admin', ['/admin/dashboard', '/admin/lapangan', '/admin/jadwal', '/admin/pelanggan', '/admin/reservasi']],
             'dashboard pemilik' => ['pemilik', ['/pemilik/dashboard', '/pemilik/reservasi']],
+            'reservasi pelanggan' => ['pelanggan', ['/reservasi']],
         ];
     }
 

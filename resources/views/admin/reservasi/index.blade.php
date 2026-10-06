@@ -40,7 +40,7 @@
                                 @endif
                             </td>
                             <td>Rp {{ number_format($r->total_harga, 0, ',', '.') }}</td>
-                            <td><span class="badge">{{ $r->status_label }}</span></td>
+                            <td>@include('partials.badge', ['status' => $r->status, 'label' => $r->status_label])</td>
                             <td><a class="btn" style="padding:6px 12px;" href="{{ route('admin.reservasi.show', $r) }}">Detail</a></td>
                         </tr>
                     @endforeach
